@@ -5,7 +5,12 @@ const connectDB = require("./Config/connectDB");
 const express = require("express");
 const app = express();
 const leaveRoutes = require("./Routes/leaveRoute");
+const cors = require("cors");
+const multer = require("multer");
+const upload = multer();
 
+app.use(upload.array());
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

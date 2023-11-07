@@ -23,19 +23,19 @@ const leaveValidation = joi.object().keys({
     .messages({
       "string.base": joiMessages.STRING_BASE.replace("ADD:", "Leave type"),
       "string.empty": joiMessages.STRING_EMPTY.replace("ADD:", "Leave type"),
-
-      "any.only": "Invalid leave type",
+      "any.only":
+        "Invalid leave type, Leave must be Sick Leave, Personal Leave, Paid Leave",
     }),
   fromDate: joi
     .date()
-    .format("MM-DD-YYYY")
+    .format("YYYY-MM-DD")
     .messages({
       "date.base": joiMessages.DATE_BASE.replace("ADD:", "From Date"),
       "date.format": joiMessages.DATE_FORMAT.replace("ADD:", "From Date"),
     }),
   toDate: joi
     .date()
-    .format("MM-DD-YYYY")
+    .format("YYYY-MM-DD")
     .messages({
       "date.base": joiMessages.DATE_BASE.replace("ADD:", "To Date"),
       "date.format": joiMessages.DATE_FORMAT.replace("ADD:", "To Date"),

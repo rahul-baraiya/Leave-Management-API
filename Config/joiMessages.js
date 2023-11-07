@@ -19,8 +19,8 @@ module.exports = {
   ARRAY_MIN: "ADD: must contain at least {#limit} items.",
   ARRAY_MAX: "ADD: cannot contain more than {#limit} items.",
   OBJECT_BASE: "ADD: must be an object.",
-  DATE_BASE: "ADD: must be a valid date format MM-DD-YYYY",
+  DATE_BASE: "ADD: must be a valid date format YYYY-MM-DD",
   DATE_FORMAT: "ADD: must be in the format {#format}.",
   ANY_ONLY: "The ADD: should be either true or false.",
-  BOOLEAN_BASE: "The ADD: should be a boolean value."
+  BOOLEAN_BASE: "The ADD: should be a boolean value.",
 };

@@ -23,7 +23,7 @@ const leaveValidation = joi.object().keys({
     }),
   fromDate: joi
     .date()
-    .format("MM-DD-YYYY")
+    .format("YYYY-MM-DD")
     .required()
     .messages({
       "any.required": joiMessages.REQUIRED.replace("ADD:", "From Date"),
@@ -32,7 +32,7 @@ const leaveValidation = joi.object().keys({
     }),
   toDate: joi
     .date()
-    .format("MM-DD-YYYY")
+    .format("YYYY-MM-DD")
     .required()
     .messages({
       "any.required": joiMessages.REQUIRED.replace("ADD:", "To Date"),
