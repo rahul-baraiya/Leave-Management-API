@@ -10,7 +10,7 @@ exports.applyForLeave = async (req, res, next) => {
 
     await addLeave.save();
 
-    res.json(successResponse(addLeave, "Leave application was successful!"));
+    res.json(successResponse("Leave application was successful!"));
   } catch (error) {
     console.error("Error applying for leave:" + error);
     next(error);
@@ -20,9 +20,9 @@ exports.applyForLeave = async (req, res, next) => {
 exports.updateLeave = async (req, res, next) => {
   try {
     const leaveData = req.body;
-    const leaveId = leaveData.leaveId;
+    const _id = leaveData._id;
 
-    const result = await Leave.updateOne({ _id: leaveId }, { $set: leaveData });
+    const result = await Leave.updateOne({ _id }, { $set: leaveData });
 
     if (result.modifiedCount === 1) {
       return res.json(
@@ -42,13 +42,13 @@ exports.updateLeave = async (req, res, next) => {
 
 exports.deleteLeave = async (req, res, next) => {
   try {
-    const leaveId = req.body.leaveId || req.params.leaveId || req.query.leaveId;
+    const _id = req.body._id || req.params._id || req.query._id;
 
-    const result = await Leave.deleteOne({ _id: leaveId });
+    const result = await Leave.deleteOne({ _id });
 
     if (result.deletedCount === 1) {
       return res.json(
-        successResponse(result, "Leave application was successfully deleted")
+        successResponse(null, "Leave application was successfully deleted")
       );
     } else {
       return res.json(
@@ -63,7 +63,7 @@ exports.deleteLeave = async (req, res, next) => {
 
 exports.leaveList = async (req, res, next) => {
   try {
-    const result = await Leave.find({});
+    const result = await Leave.find({}).select("-__v -applicationDate");
 
     res.json(
       successResponse(result, "Leave application was successfully retrieve.")
@@ -86,7 +86,9 @@ exports.findOneLeave = async (req, res, next) => {
       return res.json(errorResponse("Invalid Leave Id format"));
     }
 
-    const result = await Leave.findOne({ _id: leaveId });
+    const result = await Leave.findOne({ _id: leaveId }).select(
+      "-__v -applicationDate"
+    );
 
     res.json(
       successResponse(result, "Leave application was successfully retrieved.")
@@ -99,21 +101,20 @@ exports.findOneLeave = async (req, res, next) => {
 
 exports.updateLeaveStatus = async (req, res, next) => {
   try {
-    const { leaveId, leaveStatus } = req.body;
+    const { _id, leaveStatus } = req.body;
 
     const result = await Leave.updateOne(
-      { _id: leaveId },
+      { _id },
       { $set: { leaveStatus: leaveStatus } }
     );
 
-    const updatedResult = await Leave.findOne({ _id: leaveId });
+    // const updatedResult = await Leave.findOne({ _id }).select(
+    //   "-__v -applicationDate"
+    // );
 
     if (result.modifiedCount === 1) {
       res.json(
-        successResponse(
-          updatedResult,
-          "Leave application status was successfully updated"
-        )
+        successResponse("Leave application status was successfully updated")
       );
     } else {
       res.json(errorResponse("Leave application not found or not updated"));

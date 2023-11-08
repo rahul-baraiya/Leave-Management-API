@@ -2,7 +2,7 @@ const joi = require("joi").extend(require("@joi/date"));
 const joiMessages = require("../Config/joiMessages");
 
 const leaveIdValidation = joi.object({
-  leaveId: joi
+  _id: joi
     .string()
     .min(3)
     .required()
