@@ -59,6 +59,17 @@ const leaveValidation = joi.object().keys({
       ),
       "any.required": joiMessages.REQUIRED.replace("ADD:", "Leave days"),
     }),
+  leaveStatus: joi
+    .string()
+    .valid("Approve", "Reject")
+    .insensitive()
+    .required()    
+    .messages({
+      "string.base": joiMessages.STRING_BASE.replace("ADD:", "Leave status"),
+      "string.empty": joiMessages.STRING_EMPTY.replace("ADD:", "Leave status"),
+      "any.required": joiMessages.REQUIRED.replace("ADD:", "Leave status"),
+      "any.only": "Invalid leave status, Status must be Approve and Reject",
+    }),
   description: joi
     .string()
     .min(5)
